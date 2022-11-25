@@ -1,0 +1,791 @@
+\input{settings_c.tex}
+\usepackage{mathtools}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+%\begin{center}
+%     \normalsize{\textbf{Geometry and Topology for Data Analysis}} \\
+%\end{center}
+
+%\section{Simplicial complexes}
+\section{Abstract simplicial complexes}
+\begin{definition}[Abstract simplicial complex]
+An \emph{abstract simplicial complex} is a collection $K$ of non-empty finite sets $\emptyset \neq S \in K$ such that every nonempty subset of $S$ is also contained in $K$, i.e. $\emptyset \neq T \subseteq S \implies T \in K$.
+\end{definition}
+\rspace
+\begin{definition}[Simplex]
+Sets in $K$ are called \emph{simplices}.
+\end{definition}
+\rspace
+\begin{definition}[Vertex]
+An element $v\in S$ of a simplex $S\in K$ is a \emph{vertex} (plural: vertices).
+\end{definition}
+\rspace
+\begin{defi}[Dimension of a simplex and of a complex]\ 
+\begin{itemize}[itemsep=-2pt]
+\item \vspace{-2pt} The \emph{dimension} of a \emph{simplex} $S\in K$ is $ |S| -1$.  
+\item The \emph{dimension} of the \emph{complex} $K$ is $\sup_{S\in K}\dim S$. 
+\end{itemize}
+\end{defi}
+\rspace
+\begin{defi}[Face]
+A \emph{face} is a subset of a simplex, \emph{proper} if it is a strict subset.
+\end{defi}
+\rspace
+\begin{defi}[Coface]
+A \emph{coface} is a superset of a simplex which is in the complex.
+\end{defi}
+\rspace
+\begin{rem}
+$\exists$ a bijection between the vertex set and 0-simplices.
+\end{rem}
+\rspace
+\begin{defi}[Full subcomplex]
+A subcomplex $L$ is full if every simplex in $K$ whose vertices are in $L$ belongs to $L$, i.e. $S\subseteq \operatorname{Vert}L, S\in K \implies S\in L$.
+\end{defi}
+\rspace
+\drawaline
+\vspace{-0.4pc}
+\subsection{Vietoris-Rips complex}
+{\myfont An abstract simplicial complex that can be defined from any metric space $X$ and distance $t$ by forming a simplex for every finite set of points that has diameter at most $t$:}
+\vspace{-0.4pc}
+\begin{definition}[Vietoris-Rips]
+A \emph{Vietoris-Rips complex} of a metric space $(X,d)$ at scale $t$ is defined as 
+\begin{equation*}
+\operatorname{Rips}_t(X):= \{ \emptyset \neq Q \subseteq X \mid \operatorname{diam} Q \leq t \},
+\end{equation*}
+where $\operatorname{diam} Q := \sup_{x,y \in Q} d(x,y)$.
+\end{definition}
+\rspace\drawaline
+\vspace{-1.5pc}
+\begin{defi}[Closure]
+The \emph{closure} of a  simplex is the collection of its faces, (is the smallest simplicial complex that contains all its faces).
+%The \textbf{closure} of a simplex $S \in K$ contains all its faces:
+%\begin{equation*}
+%\operatorname{Cl} \ (S) := \{ R\in K \mid R \subseteq S\}.
+%\end{equation*}
+\end{defi}
+\rspace
+\begin{defi}[Star]
+The \emph{star} of a simplex is the collection of its cofaces.
+\end{defi}
+\rspace
+\begin{rem}
+$\operatorname{St}(S) = \bigcap_{v \in S} \operatorname{St} \{v\}.$
+\end{rem}
+\rspace
+\begin{defi}[Link] The \emph{link} of $S$ is defined as  \vspace{-0.4pc}
+$$\operatorname{Lk} \ (S) := \{P \in K \mid P\cup S \in K , P \cap S = \emptyset\}.$$
+\begin{center}
+\includegraphics[scale=0.05]{./abb/2880px-Simplicial_complex_link.svg.png}
+\end{center}
+\end{defi}
+\rspace
+\begin{definition}[Join]
+For two \emph{augmented} simplicial complex $K$ and $L$, $\vertex K \cap \vertex L = \emptyset$, their \emph{join} is a simplicial complex defined as
+\begin{equation*}
+K * L := \{S\cup T \mid S\in K, T\in L \}.
+\end{equation*}
+\end{definition}
+\rspace
+\begin{rem}
+$\operatorname{Lk} S * \operatorname{Cl} S = \operatorname{Cl} (\operatorname{St} S).$
+\end{rem}
+\rspace%\columnbreak
+\begin{definition}[Cone, Apex, Base]
+For $v \notin \vertex K$, $\{\{ v\}\} * K$ is a \emph{cone} with \emph{apex} $v$ and \emph{base} $K$. 
+%\begin{center}
+%\includegraphics[scale=0.06]{./abb/Pyramid.svg.png}
+%\end{center}
+\end{definition}
+\rspace \columnbreak
+\begin{definition}[Suspension]
+For $v,w \notin \vertex K$, $\{\{v\},\{w\}\} * K$ is a \emph{suspension} of $K$.
+\end{definition}\vspace{-0.6pc}
+{\myfont A \emph{flag complex} is an abstract simplicial complex such that\emph{ every set of vertices in which all pairs are simplices in the complex} is also itself a simplex in the complex.}\vspace{-0.6pc}
+\begin{definition}[Flag complex]
+Given a finite poset (partially order set) $P=(P,\leq)$, its \emph{flag complex} (or order complex) is the Cplx that has $P$ as vertices, and chains as simplices.
+\end{definition}
+\rspace
+\begin{example}[Derived subdivision]
+$\operatorname{Pos}K:=(K,\subseteq)$ is called the \emph{face poset} of $K$. Its flag complex is called the \emph{derived subdivision} of $K$, denoted by $\operatorname{Sd}K=\operatorname{Flag}(\operatorname{Pos}K)$.
+\end{example}
+\rspace
+\drawaline
+\vspace{-0.4pc}
+\subsection{Maps between simplicial complexes}
+Let $\mathcal{A}, \mathcal{B}$ be abstract simplicial complexes. \vspace{-0.5pc}
+\begin{definition}[Vertex map] A map $\phi: \vertex \mathcal{A} \to \vertex \mathcal{B}$ between vertex sets is a \emph{vertex map} if the image of the vertices of a simplex always span a simplex, i.e.
+$ S\in \mathcal{A} \implies \phi(S) \in \mathcal {B}.$
+\end{definition}
+\rspace
+\begin{defi}[Abstract simplicial map]
+The induced map 
+$ f:\mathcal{A} \to \mathcal{B}, S \mapsto \phi(S)$
+is an \emph{abstract simplicial map}.
+\end{defi}
+\rspace
+\begin{defi}[Simplicial isomorphism]
+If $\phi$ is a bijection and $\phi^{-1}$ is also a vertex map, then $f$ is a \emph{ simplicial isomorphism}.
+\end{defi}
+\rspace
+\drawaline
+\vspace{-0.4pc}
+\section{Geometric simplicial complexes}
+Let $V=\{v_0,...,v_k\}\subset \R^d$ be a finite point set. \vspace{-0.5pc}
+\begin{definition}[Affine combination]
+ A point $\sum_{v\in V} \lambda_v v$ with $\sum_{v\in V}\lambda_v =1$ is an \emph{affine combination} of $V$.
+\end{definition}
+\rspace
+\begin{defi}[Affine hull]
+The collection of affine combinations is the \emph{affine hull}, denoted by $\operatorname{aff} V$.
+\end{defi}
+\rspace
+\begin{defi}[Affinely independent]The points in $V$ are \emph{affinely independent} if the coefficients of any affine combination are unique. In this case  $\operatorname{aff} V$ is a $k$-dim affine subspace.
+\end{defi}
+\rspace
+\begin{definition}[Convex combination] 
+An affine combination with $\lambda_v \geq 0 $ is a \emph{convex combination}. 
+\end{definition}
+\rspace
+\begin{defi}[Convex hull]
+The \emph{convex hull} is the collection of convex combinations, denoted by $\operatorname{conv} V$.
+\end{defi}
+\rspace
+\drawaline
+\vspace{-1.5pc}
+\begin{definition}[General linear position]
+$V$ is in \emph{general linear position} if any subset of at most $d+1$ points is affinely independent.
+\end{definition}
+\rspace
+\begin{example}[Moment curve]
+The moment curve $$X = \{(t,t^2,...,t^d)\} \mid t \in \R\} \subset \R^d$$ is in general linear position.
+\end{example}
+\rspace
+\begin{rem}
+Any finite $V\subset \R^d$ can be perturbed to general position, arbitrarily close to $X$.
+\end{rem}
+\rspace
+\drawaline\\
+%\columnbreak
+Let $V$ be affinely independent. \vspace{-0.5pc}
+\begin{defi}[Geometric $k$-simplex]
+A \emph{geometric $k$-simplex} $\sigma = \operatorname{conv} V$ is the convex hull of $k+1$ affinely independent points. $k$ is the \emph{dimension} of the simplex.
+\end{defi}
+\rspace
+\begin{defi}[Vertex]
+We say $\sigma$ is spanned by $V$. The points in $V$ are called vertices, $V=\operatorname{Vert} \sigma$.
+\end{defi}
+\rspace
+\begin{rem}
+\emph{Vertex}: 0-simplex, \emph{edge}: 1-simplex, \emph{triangle}: 2-simplex, and \emph{tetrahedron}: 3-simplex.
+\end{rem}
+\rspace
+\begin{defi}[Face]
+A \emph{(proper) face} is a simplex spanned by a non-empty (proper) subset of $V$.
+\end{defi}
+\rspace
+\begin{defi}[Coface]
+$\tau$ is coface of $\sigma$ $:\iff$ $\sigma$ is face of $\tau$
+\end{defi}
+\rspace
+\begin{defi}[Boundary]
+The \emph{boundary} of $\sigma$ ($\operatorname{bd} \sigma$) is the union of all its proper faces, or equivalently, all faces of codimension 1.
+\end{defi}
+\rspace
+\begin{rem}
+The boundary of a vertex is $\emptyset$.
+\end{rem}
+\rspace
+\begin{defi}[Interior]
+$\operatorname{int} \sigma = \sigma \setminus \operatorname{bd} \sigma$.
+\end{defi}
+\vspace{-1pc}
+\drawaline\\ 
+{\myfont We are interested in sets of simplices that are closed under taking faces and that have no improper intersections:}\vspace{-0.6pc}
+\begin{definition}[Geometric simplicial complex] A \emph{geometric simplicial complex} $K$ in $\R^d$ is a collection of simplices that 
+\begin{enumerate}[itemsep = -7pt]
+\item is closed under the face relation: \vspace{-0.3pc}
+$$ \sigma \in K \ \ \text{and}\ \  \tau \text{ face of } \sigma \implies \tau \in K,$$
+\item intersects only in common faces: for every $\sigma, \tau \in K$ with $\sigma \cap \tau \neq \emptyset$, it is a face of both $\sigma, \tau$.
+\end{enumerate}
+\end{definition}
+\rspace
+\begin{definition}[Dimension]
+The \emph{dimension} of $K$ is the supremum dimension of its simplices.
+\end{definition}
+\rspace
+\begin{rem}
+Condition (ii) is equivalent to: (ii') simplices have disjoint interiors:
+$\sigma \neq \tau \in K \implies \operatorname{int}  \sigma \cap \operatorname{int} \tau = \emptyset.$
+\end{rem}
+\rspace
+\drawaline
+\vspace{-1.5pc}
+\begin{definition}[Underlying Space] The \emph{underlying space} of $K$ (or \emph{polyhedron}), denoted as $|K|$, is the union of its simplices together with the \emph{coherent topology,} which can be expressed using closed sets:  $U \subseteq |K|$ closed if and only if $U\cap \sigma$ is closed in subspace topology of $\sigma$ $\forall \sigma \in K$.
+\end{definition}
+\rspace
+\begin{definition}[Triangulation]
+A \emph{triangulation} of a topological space $X$ is  a homeomorphism between $X$ and $|K|$ for some simplicial complex $K$. In this case, $X$ is \emph{triangulable}.
+\end{definition}
+\rspace
+%\drawaline
+%\vspace{-1.5pc}
+%\begin{definition}[Vertex scheme]
+%The abstract simplicial complex induced by the vertex sets of the simplices in $K$ is called the \emph{vertex scheme} of $K$. 
+%\end{definition}
+%\rspace
+%\begin{defi}[Geometric realization]
+%If the vertex scheme of $K$ is isomorphic to some abstract simplicial complex $\mathcal{A}$, then $K$ is a \emph{geometric realization} of $\mathcal{A}$.
+%\end{defi}
+%\rspace
+\drawaline
+%\vspace{-1.5pc}
+%\begin{definition}[Underlying Space] The \emph{underlying space} of $K$ (or \emph{polyhedron}), denoted as $|K|$, is the union of its simplices together with the \emph{coherent topology,} which can be expressed using closed sets:  $U \subseteq |K|$ closed if and only if $U\cap \sigma$ is closed in subspace topology of $\sigma$ $\forall \sigma \in K$.
+%\end{definition}
+%\rspace
+%\drawaline
+\vspace{-0.5pc}
+\subsection{Simplicial maps}
+Let $K,L$ be geometric simplicial complexes. 
+\vspace{-0.5pc}
+\begin{definition}[Simplicial map]A \emph{simplicial map} is a continuous map $f: |K| \to |L|$ mapping each simplex of $K$ affinely onto some simplex in $L$. We also call $f: K \to L$ a \emph{simplicial map}. 
+\end{definition}
+\rspace
+\begin{rem}%[Simplicial isormorphism]
+The restriction to the vertices of $K$ already determines $f$ uniquely.
+\end{rem}
+\rspace
+\begin{definition}[Simplicial isomorphism] If $f$ has a simplicial inverse, it is a \emph{simplicial isomorphism}.
+\end{definition}
+\rspace
+\drawaline
+\vspace{-1.5pc}
+\begin{definition}[Vertex scheme]
+The abstract simplicial complex induced by the vertex sets of the simplices in $K$ is called the \emph{vertex scheme} of $K$. 
+\end{definition}
+\rspace
+\begin{defi}[Geometric realization]
+If the vertex scheme of $K$ is isomorphic to some abstract simplicial complex $\mathcal{A}$, then $K$ is a \emph{geometric realization} of $\mathcal{A}$.
+\end{defi}
+\rspace
+\begin{rem}
+The geometric  realization of an abstract simplicial complex is unique up to simplicial isomorphism.
+\end{rem}
+\rspace
+\begin{remark}[Geometric Realization Theorem] 
+An $d$-dim abstract simplicial complex with $n$ vertices has geometric realizations in $\R^n$, $\R^{n-1}$, and in $\R^{2d+1}$.
+\end{remark}
+\rspace
+%\drawaline\\
+%{\myfont A simplicial complex $L$ is a \emph{subdivision} of another simplicial complex $K$ if they have the same underlying space, i.e. $|L|$ = $|K|$, and every simplex in $L$ is contained in a simplex in $K$.} \vspace{-0.5pc}
+%\begin{example}[Barycentric subdivision]
+%The \emph{barycentric subdivision} of $K$, denoted as $\operatorname{Sd} K$, is defined as follows:\\
+%%\begin{enumerate}
+%(i) The vertices are the \emph{barycenters} of simplices in $K$:
+%$$\vertex \operatorname{Sd} K = \bigg\{ z(\sigma) = \sum_{i=0}^d \frac{1}{d+1} v_i \, \bigg|\, \sigma = \operatorname{conv} \{v_0,...,v_d\}\in K \bigg\},$$
+%(ii) The $k$-simplices of $\operatorname{Sd} K$ are spanned by the barycenters:
+%$$ \{z(\sigma_0), z(\sigma_1),...,z(\sigma_k) \},$$
+%where $\sigma_0 \subsetneq \sigma_1 \subsetneq ... \subsetneq \sigma_k$ is a flag of proper faces in $K$.
+%%\end{enumerate}
+%\begin{center}
+%\includegraphics[scale=0.7]{./abb/barycentric.pdf}
+%\end{center}
+%\end{example}
+\drawaline \vspace{-0.5pc}
+\subsubsection{Gluing Constructions}
+%Let $X$ be a topological space, $\sim$ an equivalence relation on $X$, $Y= X/ \sim$ the equivalence classes.  \vspace{-0.5pc}
+%\begin{definition}[Quotient map]
+%The surjection $q: X \to Y, x\mapsto [x]$ is the \emph{canonical quotient map}.
+%\end{definition}
+%\rspace
+%\begin{defi}[Quotient topology]The \emph{quotient topology} on $Y$ induced by $\sim$ is the collection $\{ U \subseteq Y \mid q^{-1} (U) \text{ open in } X\}$. 
+%\end{defi}
+%\rspace
+%\begin{defi}[Quotient space]$Y$ is the \emph{quotient space} of $X$ under $\sim$.
+%\end{defi}
+%\rspace
+%\begin{rem}
+%In general, any continuous surjection $f:X\to Y$ with the property that $U\subseteq Y$ is open iff $f^{-1}(U) \subseteq X$ is open is called a \emph{quotient map}.
+%\end{rem}
+\vspace{-0.2pc}
+Let $L$ be an abstract simplicial complex and $f:\vertex L \to V$ a surjective map to some set $V$ of vertex labels. \vspace{-0.5pc}
+\begin{definition}[Pasting complex, map] The collection $K=\{f (\sigma) \mid \sigma \in L\} $ is an abstract simplicial complex with vertices $\vertex K = V$, called the \emph{pasting complex} for $f$.
+\end{definition}
+\rspace
+\begin{defi}[Pasting map]
+The \emph{pasting map} for $f$ is the simplicial map induced by $f$.
+\end{defi}
+\vspace{-0.5pc}
+%Then:
+%\begin{itemize}[itemsep= 0pt]
+%\item $K=\{f (\sigma) \mid \sigma \in L\} $ is an abstract simplicial complex with vertices $\vertex K = V$, called the \textbf{pasting complex} for $f$.
+%\item The map $f$ induces a simplicial map $g:L \to K$, called the \textbf{pasting map} for $f$.
+%\item The corresponding map $|L| \to |K|$ is a quotient map. 
+%\end{itemize}
+{\myfont  We want to identify only disjoint simplices in $L$ and the identification should preserve dimension.
+We now phrase criterion to exclude unintended gluing of simplices.} \vspace{-0.5pc}
+\begin{rem}
+Assume that the vertices in $L$ with the same label have disjoint closed vertex stars: for any $v \neq w \in \vertex L$ with $f(v)=f(w)$, we have $\operatorname{Cl}\, \operatorname{St} v \cap \operatorname{Cl}\, \operatorname{St} w = \emptyset$. Then,
+\begin{enumerate}[itemsep = 0pt]
+\item the induced pasting map preserves dimension of simplices: $\dim g(\sigma)= \dim \sigma$ for all $\sigma \in L$, and
+\item only disjoint simplices are identified: if $\sigma, \tau \in L$ with $g(\sigma) = g(\tau)$, then $\sigma \cap \tau = \emptyset$.
+\end{enumerate}
+\end{rem}
+\rspace
+\drawaline \vspace{-0.5pc}
+\subsection{Homotopy} 
+Let $f,g: X\to Y$ be two continuous maps  between topological spaces.\vspace{-0.5pc}
+\begin{definition}[Homotopic] $f$ and $g$ are \emph{homotopic} ($f\simeq g$) if there exists a continuous deformation of $f$ into $g$, i.e. a continuous map $H:X\times [0,1] \to Y$ with $H(x,0)=f(x)$ and $H(x,1) = y(x)$ for all $x\in X$.
+\end{definition}
+\rspace
+\begin{defi}[Homotopy]
+$H$ is called a \emph{homotopy}.
+\end{defi}
+\rspace
+\begin{remark}
+Homotopy defines an equivalence relation of continuous maps.
+\end{remark}
+\rspace
+\drawaline \vspace{-0.5pc}
+\subsection{Simplicial approximation}
+{\myfont We show that by subdividing, we can approximate any continuous map between triangulable spaces by a simplicial map.} \\
+Let $K,L$ be geometric simplicial complexes and let $g:|K|\to |L|$ be a continuous map.
+\vspace{-0.5pc}
+\begin{definition}[Simplicial approximation]
+A simplicial map $f:K\to L$ is a \emph{simplicial approximation} to $g$, if for all $x \in |K|$ and $\tau \in L$, $g(x) \in \tau$ implies $f(x)\in \tau$.
+\begin{center}
+\vspace{-1.2pc}
+\includegraphics[scale=0.55]{./abb/simpapprx.pdf}
+\end{center}
+\end{definition}
+\rspace\vspace{-0.5pc}
+\begin{remark}
+$f$ and $g$ are homotopic.
+\end{remark}
+\rspace
+\drawaline\\\vspace{-0.6pc}
+%\vspace{-1.5pc}
+\begin{defi}[Subdivision]
+{A simplicial complex $L$ is a \emph{subdivision} of another simplicial complex $K$ if they have the same underlying space, i.e. $|L|$ = $|K|$, and every simplex in $L$ is contained in a simplex in $K$.}
+\end{defi}
+\rspace
+\begin{example}[Barycentric subdivision]
+The \emph{barycentric subdivision} of  $K$, denoted as $\operatorname{Sd} K$, is defined as follows:\\
+(i) The vertices are the barycenters of simplices of $K$:\vspace{-0.35pc}
+$${\scriptstyle \vertex \operatorname{Sd} K = \big\{ z(\sigma) = \sum_{i=0}^d \frac{1}{d+1} v_i \, \big|\, \sigma = \operatorname{conv} \{v_0,...,v_d\}\in K \big\},} \vspace{-0.39pc}$$ 
+(ii) The $k$-simplices of $\operatorname{Sd} K$ are spanned by the barycenters:\vspace{-0.4pc}
+$$ {\scriptstyle \{z(\sigma_0), z(\sigma_1),...,z(\sigma_k) \},}\vspace{-0.4pc}$$
+where $\sigma_0 \subsetneq \sigma_1 \subsetneq ... \subsetneq \sigma_k$ is a \emph{chain} of proper faces in $K$.
+\begin{center}
+\vspace{-0.6pc}
+\includegraphics[scale=0.6]{./abb/barycentric.pdf}
+\vspace{-0.5pc}
+\end{center}
+\end{example}
+\rspace
+\drawaline\\\vspace{-0.6pc}
+\begin{rem}
+Every point $x\in |K|$ lies in the unique interior of a simplex $\sigma_x \in K$. All coefficients $\lambda_v$ in 
+$x = \sum_{v\in \sigma_x} \lambda_v v$
+are strictly positive.  
+\end{rem}
+\rspace
+\begin{definition}[Barycentric coordinates]
+For each vertex $v \in \vertex K$, define the coordinate function $b_v : |K|  \to [0,1]$ \vspace{-0.38pc}
+\begin{equation*}
+{\scriptsize
+x \mapsto 
+\begin{cases}
+\lambda_v, \quad & \text{if }v \text{ is a vertex of  }\sigma_x, \vspace{-0.1pc} \\
+0,\quad & \text{otherwise}.
+\end{cases} }
+\vspace{-0.38pc}
+ \end{equation*}
+The functions $b_v$ are the \emph{barycentric coordinates} of $K$.
+ \end{definition}
+ \rspace
+ \begin{rem}
+Barycentric coordinates are continuous.
+ \end{rem}
+ \rspace
+  \begin{rem}
+The unique simplex $\sigma_x \in K$ with $x \in \operatorname{int} \sigma_x$ is spanned by vertices
+$
+\{ v\in \vertex K \mid b_v(x) >0\}.
+$
+\end{rem}
+\rspace
+\drawaline\\\vspace{-0.7pc}
+\begin{definition}[Open star]
+The \emph{open star} of $\sigma \in K$ is 
+$
+\operatorname{st} \sigma = \bigcup_{\tau \in \operatorname{St} \sigma} \operatorname{int} \tau.
+$
+\end{definition}
+\rspace
+\begin{rem}
+The open star is an open set: for a vertex $v$ we have
+$\operatorname{st}(v)  = \{x \in |K| \mid b_v(x)>0\} = b_v^{-1}(0,\infty).$
+\end{rem}
+\rspace
+\begin{remark}A vertex set $S$ spans a simplex $\tau$ iff their open star intersection is non-empty, i.e. $\bigcap_{v\in S} \operatorname{st}(v) \neq \emptyset,$ in which case we have
+$
+\operatorname{st}(\sigma) = \bigcap_{v\in S}\operatorname{st}(v). $
+\end{remark}
+\rspace\drawaline\\\vspace{-0.7pc}
+\begin{definition}[Star condition]
+$g: |K| \to |L|$ satisfies the \emph{star condition} if it maps open stars in $K$ into open stars in $L$, i.e.
+$\forall v \in \vertex K \ \exists u \in \vertex L: g(\operatorname{st}v) \subseteq \operatorname{st} u.$
+\end{definition}
+\rspace
+\begin{rem}
+Choosing such a vertex $u_v$ for each vertex $v$ defines a vertex map $\phi: \vertex K \to \vertex L, v \mapsto u_v$, which extends to a simplicial approximation $f:K\to L$ of $g$.
+\end{rem}
+\rspace\drawaline\\\vspace{-0.7pc}
+\begin{definition}[Mesh]
+The \emph{mesh} of $K$ is the maximum length of its edges. It is also the maximum \emph{diameter} of any simplex.
+\end{definition}
+\rspace
+\begin{rem}
+Let $\delta$ be the mesh of $K$. Then the mesh of $\operatorname{Sd} K$ is at most $\frac{d}{d+1}\delta$, where $d$ is the dimension of $K$.
+\end{rem}
+\rspace
+\begin{theorem}[Simplicial approximation]
+Let $K,L$ be finite geometric simplicial complexes. Then $g$ has a simplicial approximation $f:|\operatorname{Sd}^n K| \to |L|$ for some $n\in \N$.
+\end{theorem}
+\rspace\drawaline\\\vspace{-0.5pc}
+\section{Complexes from geometric point sets}
+\subsection{Homotopy equivalence}
+{\myfont Weaker than homeomorphism.} Let $X,Y$ be topological spaces.
+\columnbreak
+\begin{definition}[Homotopy equivalent]
+Two spaces $X, Y$ are \emph{homotopy equivalent} ($X \simeq Y$) if $\exists$ continuous $f:X\to Y$, $g:Y\to X$ such that
+$ f\circ g \simeq \operatorname{Id}_Y\ \text{and} \ g\circ f \simeq \operatorname{Id}_X$.
+\end{definition}
+\rspace
+\begin{defi}[Homotopy inverse]
+$g$ is a \emph{homotopy inverse} to $f$ and vice versa.
+\end{defi}
+\rspace
+\begin{remark}
+Homotopy equivalence defines an equivalence relation of topological spaces.
+\end{remark}\vspace{-0.6pc}
+{\myfont Consider $Y\subseteq X$. Then a continuous map $r:X \to Y$ is a \emph{retraction} if $r$ restricts to the identity map on $Y$. More generally:}\vspace{-0.5pc}
+\begin{definition}[Retraction]
+Given $\iota: Y \to X$ continuous, a continuous $r:X\to Y$
+is a \emph{retraction} if $r\circ \iota =\id_Y$.
+\end{definition}
+\rspace
+\begin{defi}[Deformation retraction]
+The map $r:X\to Y$ is a \emph{deformation retraction} if $\iota\circ r$ is homotopic to $\id_X$.
+\end{defi}
+\rspace
+\begin{rem}
+A {deformation retraction} can also be defined as a homotopy between a retraction and the identity map on $X$.
+\end{rem}
+\rspace
+\begin{defi}[Contractible]
+Assume $\exists$ deformation retraction $X\to Y$. If $Y$ is a single point, then $X$ is \emph{contractible}.
+\end{defi}
+\rspace
+\begin{remark}
+Two spaces $X$ and $Y$ are homotopy equivalent iff $\exists Z$ s.t. $\exists$ deformation retractions $Z \to X$ and $Z \to Y$.
+\end{remark}
+\rspace
+\drawaline \vspace{-0.5pc}
+\subsection{Nerves} 
+{\myfont We construct simplicial complexes by recording the intersection patterns of a collection of sets.} \vspace{-0.6pc}
+\begin{definition}[Nerve]
+Let ${F}$ be a finite collection of sets. The \emph{nerve} of ${F}$ consists of all subcollections whose sets have a non-empty common intersection,
+$
+\operatorname{Nrv} F = \{G\subseteq {F} \mid \bigcap G \neq \emptyset\}.
+$
+\begin{center}
+\vspace{-0.8pc}
+\includegraphics[scale=0.55]{./abb/nerve.pdf}
+\vspace{-0.7pc}
+\end{center}
+\end{definition}
+\rspace
+\begin{rem}
+$\operatorname{Nrv} F$ is always an abstract simplicial complex: if $\bigcap X \neq \emptyset$ and $Y\subseteq X$, then $\bigcap Y \neq \emptyset$ as well.
+\end{rem}
+\rspace
+\begin{theorem}[Nerve theorem for compact convex covers]Let $X$ be compact.
+Assuming that $F$ is a finite cover of $X$ by compact convex sets. Then $|\operatorname{Nrv} F| \simeq X$.
+\end{theorem}
+\rspace
+\drawaline \vspace{-0.5pc}
+\subsection{Čech complexes} 
+{\myfont Consider the case where $F$ is a collection closed balls.} Let $X\subset \R^d$ be a \emph{finite point set}. Write $D_r(x) = \{y\in \R^d \mid \|y-x\|\leq r\}$.\vspace{-0.6pc}
+\begin{definition}[Čech complex]
+The Čech complex of $X$ for radius $r$ is defined as
+$
+\text{Čech}_r(X) = \{Q \subseteq X \mid \bigcap_{x\in Q}D_r(x)\neq \emptyset \}.
+$
+\begin{center}
+\vspace{-0.8pc}
+\includegraphics[scale=0.5]{./abb/cech.pdf}
+\vspace{-0.8pc}
+\end{center}
+\end{definition}
+\rspace \columnbreak
+\begin{rem}
+Čech complexes are abstract simplicial complexes. 
+\end{rem}
+\rspace
+\begin{rem}
+$\text{Čech}_r(X)$ is isomorphic to the never of the balls centered at the points in $X$.
+\end{rem}
+\rspace
+\begin{rem}
+If $X$ is compact, then for every $r\geq \operatorname{diam} X$, the Čech complex is the full simplex, i.e. $\operatorname{Cech}_r(X)=\operatorname{Cl} X$.
+\end{rem}
+\rspace
+\begin{remark}
+$Q=\{q_1,...,q_n\} \in \operatorname{Cech}_r(X)  \iff \exists z \in\bigcap_{q\in Q}D_r(q) $ $\iff Q\subseteq D_r(z)$ $\iff $ the smallest enclosing sphere of $Q$ has radius $\leq r$.
+\end{remark}
+\rspace
+\drawaline\\\vspace{-0.5pc}
+\subsubsection{Enclosing spheres and circumspheres}\vspace{-0.15pc}
+Let $Q\subset \R^d$ be a finite point set and let $D$ be a $d$-ball with boundary (($d-1$)-sphere) $S$.\vspace{-0.6pc}
+\begin{definition}[Enclosing sphere]$S$ is an \emph{enclosing sphere} of $Q$, if $Q\subset D$. In this case, $D$ is an \emph{enclosing disk} of $Q$.
+\end{definition}
+\rspace
+\begin{definition}[Circumsphere] $S$ is \emph{circumsphere} of $Q$, if $Q\subset S$.
+\end{definition}
+\rspace
+\begin{remark}
+Affinely independent $Q$ has a circumsphere. 
+\end{remark}
+\rspace
+\begin{rem}[Smallest circumsphere]If $|Q| \leq d$, then its circumsphere is not unique. But the smallest circumsphere $S(Q)$ is unique and has center on  the affine hull $\operatorname{aff} Q$.
+\end{rem}
+\rspace
+\begin{remark}
+Assume $B(Q,P)$ is the smallest circumsphere of $P$ that encloses $Q$ and $x\in Q$. If the sphere $B(Q \setminus \{x\},P)$  encloses $x$, then ${ B(Q,P) = B(Q \setminus \{x\},P)}$, and otherwise ${ B(Q,P) = B(Q \setminus \{x\},P \cup \{x\})}$.
+\end{remark}
+\rspace
+\drawaline\\\vspace{-0.5pc}
+\subsection{Voronoi domains and Delaunay complexes}
+Let $X\subset \R^d$ be a finite point set. \vspace{-0.6pc}
+\begin{defi}[Voronoi domain]
+The \emph{voronoi domain} of $x\in X$ is the set of points $p$ in $\R^d$ that have $x$ as the nearest neighbor in $X$:
+$
+\operatorname{Vor}(x,X) = \{p\in\R^d \mid \|p-x\|\leq \|p-y\|\ \text{for all } y\in X\}.
+$
+%\begin{center} \vspace{-0.6pc}
+%\includegraphics[scale=0.5]{./abb/voronoi.pdf}\vspace{-0.6pc}
+%\end{center}
+\end{defi}
+\rspace
+\begin{defi}[Delaunay complex]
+The \emph{Delaunay complex} of $X$ is defined as
+$\operatorname{Del} (X) := \{ Q\subseteq X  \mid \bigcap_{x\in Q}\operatorname{Vor}(x,X)\neq \emptyset\}$.
+\begin{center}\vspace{-0.6pc}
+\includegraphics[scale=0.55]{./abb/del.pdf} \vspace{-0.5pc}
+\end{center}
+\end{defi}
+\rspace
+\begin{rem}
+The Delaunay complex is isomorphic to the nerve of the Voronoi domains.
+\end{rem}
+\rspace
+\begin{rem}
+$Q\in \operatorname{Del}(X) \implies \exists x \in \R^d, r>0: \|x-q\|=r \forall q\in Q.$
+\end{rem}
+\rspace
+\begin{remark}
+$\emptyset \neq Q \subseteq X$ is a simplex of $\operatorname{Del} (X)$ iff $Q$ has a {circumsphere} $S$ ($Q\subset S$) bounding an open ball $B$ that is empty of points in $X$: $X\cap B= \emptyset$.
+\end{remark}
+\rspace\drawaline\\\vspace{-0.7pc}
+\begin{definition}[General spherical position]
+$X$ is in \emph{general spherical position} if for every $Q\subseteq X$ of at most $d+1$ points, (i) $Q$ is affinely independent; and (ii) the smallest circumsphere of $Q$ contains no other points of $X$:
+$S(Q) \cap (X\setminus Q) = \emptyset.$
+\end{definition}
+\rspace
+\begin{theorem}
+Let $X$ be in {general spherical position}. Then the  geometric simplices
+$\operatorname{GeomDel}(X) = \{\operatorname{conv} Q \mid Q \in \operatorname{Del}(X)\}$
+form a geometric simplicial complex. Its underlying space is the convex hull of the points $X$, i.e.
+$|\operatorname{GeomDel(X)}| =\operatorname{conv} X.$
+\end{theorem}
+\rspace \columnbreak
+\begin{defi}[Lifting]
+$l:\R^d\to \R^{d+1}, x\mapsto (x,\|x\|^2)$.
+\end{defi}
+\rspace
+\begin{lemma}
+A $(d-1)$-sphere $S\in \R^d$ corresponds to a unique hyperplane $H= \operatorname{aff} l(S) \subseteq \R^{d+1}$ with $l(S)=H \cap \operatorname{im} l$ (an ellipsoid). $S$ is empty of $X$ iff all points in $l(X)$ lie in the upper halfspace bounded by $H$.
+\end{lemma}
+\rspace
+\begin{cor}
+If $X\subset \R^d$ is in \emph{general spherical position}, then $l(X)$ is in \emph{general linear position}.
+\end{cor}
+\rspace
+\drawaline\\\vspace{-0.5pc}
+\subsection{Delaunay Filtration}
+\begin{definition}[Delaunay complex]
+The \emph{Delaunay complex} of $X$ \emph{at radius} $r\geq 0$ is 
+$
+\operatorname{Del}_r(X) = \{ Q\subseteq X \mid \bigcap_{x\in Q} \operatorname{Vor}_r(x,X) \neq \emptyset \},
+$
+where
+$\operatorname{Vor}_r(x,X)=D_r(x)\cap \operatorname{Vor}(x,X).$
+\begin{center}\vspace{-0.53pc}
+\includegraphics[scale=0.55]{./abb/alpha.pdf} \vspace{-0.34pc}
+\end{center}
+\end{definition}
+\rspace
+\begin{rem}
+$\operatorname{Del}_r(X) \cong \operatorname{Nrv} {\{\operatorname{Vor}_r(x,X)\mid x\in X\}}$
+\end{rem}
+\rspace
+\begin{rem}
+For sufficiently large $r$: $\operatorname{Del}_r(X)= \operatorname{Del}(X)$.
+\end{rem}
+\rspace
+\begin{remark} The Čech and Delaunay complexes for the same radius have homotopy equivalent geometric realizations:
+$|\operatorname{Del}_r(X)| \simeq |\operatorname{Cech}_r(X)|\simeq \bigcup_{x\in X} D_r(x).$
+\end{remark}
+\rspace
+\begin{remark}
+$Q \subseteq X$ is a simplex of $\operatorname{Del}_r (X)$ iff the smallest circumsphere of $Q$ excluding $X$ has radius at most $r$.
+\end{remark}
+\rspace
+\begin{rem}
+$\operatorname{Del}_r(X) \neq \operatorname{Del}(X)\cap \operatorname{Cech}_r(X)$.
+\end{rem}
+\rspace\drawaline\\\vspace{-0.5pc}
+\section{Homology}
+Let $K$ be a finite simplicial complex. \vspace{-0.6pc}
+\begin{definition}[Euler characteristic]
+Let $k_i$ be the number of $i$-simplices. Then, the $\chi(K)=\sum_{i=0}^{\dim K}(-1)^i k_i$ is the \emph{Euler characteristic}.
+\end{definition}
+\rspace
+\begin{rem}
+If $|K| \simeq |L|$, then $\chi(K)=\chi(L)$.
+\end{rem}
+\rspace
+\begin{definition}[$d$-chain]A \emph{$d$-chain} is a \emph{formal sum} of $d$-simplices
+$\sum_{\sigma\in K_{(d)}} \lambda_\sigma \sigma$
+with coefficients in  $\mathbb{Z}_2$.
+\end{definition}
+\rspace
+\begin{defi}[Chain space]
+The $d$-chains form a $\mathbb{Z}_2$-vector space $C_d(K)$, the \emph{chain space}.
+\end{defi}
+\rspace
+\begin{rem}
+A $d$-chain corresponds to a subset of $d$-simplices.
+\end{rem}
+\rspace
+\begin{defi}[Boundary map]
+ The \emph{boundary} $\del \sigma$ of a $d$-simplex $\sigma$ is the $(d-1)$-chain of facets (faces of codimension 1) of $\sigma$.  This extends linearly to a \emph{boundary map} $\del_d: C_d(K) \to C_{d-1}(K)$.
+ \end{defi}
+\rspace
+\begin{defi}[$d$-boundary]
+A $d$-chain $\gamma$ is called a \emph{$d$-boundary} if $\gamma = \del_{d+1}(\xi)$ for some $(d+1)$-chain $\xi$. 
+\end{defi}
+\rspace
+\begin{rem}
+The $d$-boundaries $B_d := \operatorname{im}\del_{d+1}$ form a subspace of $C_d(K)$, containing boundaries of $(d+1)$ chains.
+\end{rem}
+\rspace
+\begin{defi}[$d$-cycle]A $d$-chain $\gamma$ is a $d$-cycle if $\del_d(\gamma)=0$. 
+\end{defi}
+\rspace
+\begin{rem}
+The $d$-cycles form a subspace $Z_d(K):=\operatorname{ker}\del_d$ of , containing chains with zero boundary.
+\end{rem}
+\rspace \columnbreak
+\begin{rem}
+Boundaries are cycles: $B_d(K)\subseteq Z_d(K)$. In other words, $\del_d\del_{d+1}(\sigma)=0$ for any $(d+1)$-chain $\sigma$.
+\begin{center}\vspace{-0.53pc}
+\includegraphics[scale=0.75]{./abb/chains.pdf} \vspace{-0.34pc}
+\end{center}
+ \end{rem}
+\rspace
+\begin{defi}[Homology]
+The $d$-th \emph{homology (space)} is the $\mathbb{Z}_2$-vector space
+$H_d(K) = Z_d(K) / B_d(K).$
+\end{defi}
+\rspace
+\begin{defi}[Betti number]
+The dimension $\beta_d(K)= \dim H_d(K)$ is the $d$-th \emph{Betti number}.
+\end{defi}
+\rspace
+\begin{rem}
+The betti numbers in dimension 0,1 and 2 count the number of connected components, tunnels, and voids of $K$.
+\end{rem}
+\rspace
+\drawaline \vspace{-0.5pc}
+\subsection{Induced maps}
+{\myfont A simplicial map induces a map between homology groups.} Let $f:K\to L$ be a simplicial map.\vspace{-0.5pc}
+\begin{defi}[Induced chain map]
+The map $f$ induces a chain map $f_\#:C_d(K)\to C_d(L)$ by specifying it on the basis, the $d$-simplices of $K$, i.e. $\sigma \mapsto f(\sigma)$ if $f(\sigma)$ is a $d$-simplex, otherwise $0$.
+\end{defi}
+\rspace
+\begin{lemma}
+The map $f_\#$ induces a map $f_*:H_d(K)\to H_d(L)$ on homology.
+\end{lemma}
+\rspace
+\begin{rem}
+The homology is a \emph{functor} from simplicial complexes to vector spaces. In particular, commutative diagrams are preserved. \vspace{-0.4pc}
+\begin{equation*}
+	\begin{tikzcd}
+	K \arrow{r}{f} \arrow{rd}[below]{g\circ f\ \ \ \ } & L \arrow{d}[right]{g}\\
+					 & M
+	\end{tikzcd}
+	\quad   \implies \quad 
+		\begin{tikzcd}
+	H_*(K) \arrow{r}{f_*} \arrow{rd}[below]{g_*\circ f_*\ \ \ \ } & L \arrow{d}[right]{g_*}\\
+					 & M
+	\end{tikzcd}
+	\end{equation*}
+\end{rem}
+\rspace
+\begin{theorem}
+Let $f$ be a simplicial map and a homotopy equivalence. Then the induced homomorphism $H_*(f):H_*(K)\to H_*(L)$ is an isomorphism.
+\end{theorem}
+\rspace
+\drawaline \vspace{-0.5pc}
+\subsection{Computing homology}
+{\myfont We want to find compatible basis for the subspaces.} \vspace{-0.5pc}
+\begin{defi}[Pivot]
+Let $M$ be a matrix. Then the \emph{pivot index} of a column is the index of the last non-zero entry.
+\end{defi}
+\rspace
+\begin{defi}[Reduced]
+$M$ is \emph{reduced} if the pivots of non-zero columns are distinct.
+\end{defi}
+\rspace
+\begin{alg}[Matrix reduction] Let $D$ be the boundary matrix and $V$ the identity matrix encoding column operations. As long as $D$ is not reduced, we a left column to a right column  of $D$ and $V$ simultaneously. Output: $D$ and $V$.
+\end{alg}
+\rspace
+\begin{rem} The columns $\{ D_j \neq 0\}$ form a basis of $B_*(K)$.
+\end{rem}
+\rspace
+\begin{rem}
+The columns $\{V_i \mid D_i=0\}$ form a basis of $Z_*(K)$. 
+ \end{rem}
+\rspace
+\begin{rem}
+The columns $\{V_i+B_d(K) \mid D_i =0, i \notin \text{pivots } D\}$ form a basis for $H_*(K)$.
+\end{rem}
+\end{multicols*}
+\end{document}

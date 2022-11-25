@@ -1,0 +1,253 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[utf8]{inputenc}
+
+
+% To make this come out properly in landscape mode, do one of the following
+% 1.
+%  pdflatex latexsheet.tex
+%
+% 2.
+%  latex latexsheet.tex
+%  dvips -P pdf  -t landscape latexsheet.dvi
+%  ps2pdf latexsheet.ps
+
+
+% If you're reading this, be prepared for confusion.  Making this was
+% a learning experience for me, and it shows.  Much of the placement
+% was hacked in; if you make it better, let me know...
+
+
+% 2008-04
+% Changed page margin code to use the geometry package. Also added code for
+% conditional page margins, depending on paper size. Thanks to Uwe Ziegenhagen
+% for the suggestions.
+
+% 2006-08
+% Made changes based on suggestions from Gene Cooperman. <gene at ccs.neu.edu>
+
+
+% To Do:
+% \listoffigures \listoftables
+% \setcounter{secnumdepth}{0}
+
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+	{ \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+
+% Turn off header and footer
+\pagestyle{empty}
+ 
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage[intlimits]{amsmath}
+\usepackage{stmaryrd}
+\usepackage{relsize}
+\usepackage{etoolbox}
+% \renewcommand*\ttdefault{cmvtt}
+% \renewcommand*\familydefault{\ttdefault} %% Only if the base font of the document is to be typewriter style
+% \usepackage[OT1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{cancel}
+\usepackage{mdframed}
+\usepackage{framed}{}
+\usepackage{tablefootnote} 
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{etoolbox}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{thmtools}
+%\usepackage{mathpazo}
+\usepackage{stmaryrd}
+%\usepackage{stix}
+%\let\Hermaphrodite\relax
+\usepackage{mathabx}
+\let\Sun\relax
+\let\Moon\relax
+\let\Mercury\relax
+\let\Venus\relax
+\let\Earth\relax
+\let\Mars\relax
+\let\Jupiter\relax
+\let\Saturn\relax
+\let\Uranus\relax
+\let\Neptune\relax
+\let\Pluto\relax
+\let\Gemini\relax
+\let\Leo\relax
+\let\Libra\relax
+\let\Scorpio\relax
+\let\Aries\relax
+\let\Taurus\relax
+\usepackage{marvosym}
+\usepackage[
+   pdfpagelabels=true,
+   pdftitle={Geometry and Topology for Data Analysis},
+   pdfauthor={Min Tang},
+ ]{hyperref}
+\usepackage{bookmark}
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+\usepackage{pst-grad} % For gradients
+\usepackage{pst-plot} % For axes
+\usepackage[space]{grffile} % For spaces in paths
+\usepackage{etoolbox} % For spaces in paths
+\makeatletter % For spaces in paths
+\patchcmd\Gread@eps{\@inputcheck#1 }{\@inputcheck"#1"\relax}{}{}
+\makeatother
+
+\usetikzlibrary{cd}
+\usetikzlibrary{calc}
+\theoremstyle{definition}
+\newtheorem{definition}{Def}
+\newtheorem{defi}[definition]{Def}
+\newtheorem{problem}[definition]{Problem}
+\newtheorem{example}[definition]{Exp}
+\newtheorem{cor}[definition]{Cor}
+\newtheorem{alg}[definition]{Alg}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}[definition]{Thm}
+\newtheorem{prop}[definition]{Prop}
+\newtheorem{lemma}[definition]{Lem}
+%\newtheorem{claim}[definition]{Claim}
+%\newtheorem{corollary}[definition]{Corollary}
+%\theoremstyle{definition}
+\newtheorem{rem}[definition]{Rem}
+\newtheorem{remark}[definition]{Rem}
+
+%\AfterEndEnvironment{definition}{\noindent\ignorespaces}
+%\AfterEndEnvironment{example}{\noindent\ignorespaces}
+%\AfterEndEnvironment{theorem}{\noindent\ignorespaces}
+%%\AfterEndEnvironment{satz}{\noindent\ignorespaces}
+%\AfterEndEnvironment{corollary}{\noindent\ignorespaces}
+%\AfterEndEnvironment{remark}{\noindent\ignorespaces}
+%\AfterEndEnvironment{remark'}{\noindent\ignorespaces}
+%\AfterEndEnvironment{proposition}{\noindent\ignorespaces}
+%\AfterEndEnvironment{proof}{\noindent\ignorespaces}
+\let\existstemp\exists
+\let\foralltemp\forall
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\newcommand{\vsubset}{\rotatebox[origin=c]{90}{$\subset$}}
+\newcommand{\vphi}{\phi}
+\newcommand{\ol}{\overline}
+%Differentiation
+\newcommand{\D}{\, \mathrm{d} }
+%Bold Symbols
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+%Calligraphic Symbols
+\newcommand{\ZZ}{\mathcal{Z}}
+\newcommand{\rspace}{\vspace{-1.1pc} }
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\QQ}{\mathcal{Q}}
+\newcommand{\EE}{\mathcal{E}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\RR}{\mathscr{R}}
+\newcommand{\BB}{\mathscr{B}}
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\DD}{\mathscr{D}}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\NN}{\mathscr{N}}
+\renewcommand{\AA}{\mathscr{A}}
+\newcommand{\myfont}{\fontfamily{ptm}\selectfont }
+% Operator names
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\del}{\partial}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\Var}{\operatorname{Var}} 
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\SL}{\operatorname{SL}}
+\newcommand{\Aff}{\operatorname{Aff}}
+\newcommand{\Isom}{\operatorname{Isom}}
+\newcommand{\Trans}{\operatorname{Trans}}
+\newcommand{\Bild}{\begin{tiny}(Bild hier)\end{tiny}}
+\newcommand{\Ueb}{\begin{tiny}\textbf{(Ü)}\end{tiny}}
+\newcommand{\te}{\text}
+\newcommand{\comment}[1]{}
+\newcommand{\drawaline}{\rule{0.325\textwidth}{0.2pt}}
+%\renewcommand{\def}{\definition}
+\renewcommand{\ker}{\operatorname{ker}}
+\renewcommand*{\forall}{\foralltemp\mkern2mu}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\O}{\operatorname{O}}
+\renewcommand{\Im}{\operatorname{im}}
+%\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\phi}{\varphi}
+\makeatletter 
+\AfterEndEnvironment{mdframed}{%
+ \tfn@tablefootnoteprintout% 
+ \gdef\tfn@fnt{0}% 
+}
+\DeclareMathOperator{\vertex}{Vert}
+\usepackage{xpatch}
+\makeatletter
+%\AtBeginDocument{\xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}}
+%\numberwithin{equation}{section}
+%\numberwithin{equation}{section}
+%\numberwithin{definition}{section}
+%\numberwithin{theorem}{section}
+%\numberwithin{lemma}{section}
+%\numberwithin{prop}{section}
+%\numberwithin{corollary}{section}
+%\numberwithin{problem}{section}
+%\numberwithin{example}{section}
+%\numberwithin{remark}{section}
+%\numberwithin{claim}{section}
+\setlist[enumerate,1]{label={(\roman*)}}
+\linespread{1.1}
+
+% -----------------------------------------------------------------------
